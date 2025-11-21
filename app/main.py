@@ -1,23 +1,33 @@
 from fastapi import FastAPI
-import mysql.connector
+from sqlalchemy.exc import OperationalError
+import time
 
-app = FastAPI()
+from app.database import Base, engine
+from app.routers import items
 
-def get_db_message():
-    conn = mysql.connector.connect(
-        host="db",
-        user="root",
-        password="password",
-        database="mydb"
-    )
-    cursor = conn.cursor()
-    cursor.execute("SELECT message FROM messages LIMIT 1;")
-    row = cursor.fetchone()
-    cursor.close()
-    conn.close()
-    return row[0] if row else "No message found"
+# Retry function to wait for DB to be ready
+def wait_for_db(retries=10, delay=3):
+    for i in range(retries):
+        try:
+            # Try connecting to DB and creating tables
+            Base.metadata.create_all(bind=engine)
+            print("Database connected and tables created!")
+            return
+        except OperationalError as e:
+            print(f"Database connection failed ({i+1}/{retries}). Retrying in {delay}s...")
+            time.sleep(delay)
+    raise Exception("Could not connect to the database after multiple retries.")
 
+# Initialize FastAPI app
+app = FastAPI(title="FastAPI MySQL Docker App")
+
+# Include the items router
+app.include_router(items.router)
+
+# Wait for DB before starting
+wait_for_db()
+
+# Optional: simple root endpoint
 @app.get("/")
 def home():
-    message = get_db_message()
-    return {"message_from_db": message}
+    return {"message": "FastAPI + MySQL + SQLAlchemy + Docker working!"}
