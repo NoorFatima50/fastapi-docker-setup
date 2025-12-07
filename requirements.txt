@@ -4,3 +4,6 @@ sqlalchemy
 mysql-connector-python
 pydantic
 python-dotenv
+flake8
+pytest
+

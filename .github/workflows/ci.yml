@@ -26,6 +26,9 @@ jobs:
       - name: Lint code with Flake8
         run: flake8 app
 
+      - name: Run tests
+        run: pytest -q
+
       - name: Login to DockerHub
         uses: docker/login-action@v2
         with:
