@@ -45,7 +45,7 @@ jobs:
         run: docker build -t noorfatima21/fastapi-app .
 
       - name: Start docker-compose for tests
-        run: docker-compose up -d
+        run: docker compose up -d
 
       - name: Wait for MySQL
         run: |
