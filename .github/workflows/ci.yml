@@ -38,9 +38,10 @@ jobs:
         run: docker exec fastapi_app flake8 app
 
       - name: Run tests
-        run: |
-           docker run --rm --memory="1g" -e PYTHONPATH=/app fastapi_app pytest -v tests/
-        
+        run: pytest -q --disable-warnings tests/
+        env:
+          PYTHONPATH: /app
+
       - name: Build Docker image
         run: docker build -t noorfatima21/fastapi-app .
 
