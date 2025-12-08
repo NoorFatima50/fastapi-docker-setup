@@ -28,7 +28,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Start services
-        run: docker-compose up -d
+        run: docker compose up -d
 
       - name: Install dependencies in container
         run: |
