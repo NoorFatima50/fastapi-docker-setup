@@ -3,6 +3,7 @@ from sqlalchemy.exc import OperationalError
 import time
 
 from app.database import Base, engine
+from app import models  # import all models
 from app.routers import items
 
 

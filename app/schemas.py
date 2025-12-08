@@ -1,4 +1,4 @@
-from pydantic import ConfigDict
+from pydantic import BaseModel, ConfigDict
 
 
 class ItemBase(BaseModel):
