@@ -35,6 +35,12 @@ jobs:
             sleep 5
           done
 
+      - name: Ensure DB tables created
+        run: |
+          # ensure Python can import
+          docker exec -e PYTHONPATH=/app -w /app fastapi_app \
+            python -c "from app.database import Base, engine; import app.models; Base.metadata.create_all(bind=engine); print('tables ensured')"
+
       - name: Run flake8
         run: docker exec fastapi_app flake8 app
 
