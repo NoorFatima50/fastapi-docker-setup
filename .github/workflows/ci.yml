@@ -36,6 +36,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
           pip install flake8 pytest httpx
+          export PYTHONPATH=.
 
       - name: Run flake8 lint
         run: flake8 app
