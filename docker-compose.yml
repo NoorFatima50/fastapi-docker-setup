@@ -11,8 +11,7 @@ services:
       DB_HOST: db
       DB_PORT: 3306
     volumes:
-      - ./app:/app/app
-      - ./tests:/app/tests   # mount tests folder
+      - ./:/app       # Mount entire project root
     depends_on:
       - db
 
