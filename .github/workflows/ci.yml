@@ -38,7 +38,8 @@ jobs:
         run: docker exec fastapi_app flake8 app
 
       - name: Run tests
-        run: docker exec fastapi_app pytest -q tests/
+        run: |
+          docker exec -e PYTHONPATH=/app fastapi_app pytest -q tests/
         
       - name: Build Docker image
         run: docker build -t noorfatima21/fastapi-app .
