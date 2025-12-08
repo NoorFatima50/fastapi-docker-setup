@@ -39,7 +39,7 @@ jobs:
 
       - name: Run tests
         run: |
-          docker exec -e PYTHONPATH=/app fastapi_app pytest -q tests/
+           docker run --rm --memory="1g" -e PYTHONPATH=/app fastapi_app pytest -v tests/
         
       - name: Build Docker image
         run: docker build -t noorfatima21/fastapi-app .
