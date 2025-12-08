@@ -12,6 +12,7 @@ services:
       DB_PORT: 3306
     volumes:
       - ./app:/app/app
+      - ./tests:/app/tests   # mount tests folder
     depends_on:
       - db
 
