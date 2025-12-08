@@ -38,8 +38,11 @@ jobs:
       - name: Run flake8
         run: docker exec fastapi_app flake8 app
 
-      - name: Run tests
-        run: docker exec fastapi_app pytest -q --disable-warnings
+      - name: Run tests inside container
+        run: |
+          # make sure tests run from /app and Python can import package
+          docker exec -e PYTHONPATH=/app -w /app fastapi_app pytest -q --disable-warnings tests/
+
 
       - name: Build Docker image
         run: docker build -t noorfatima21/fastapi-app .
